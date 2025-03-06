@@ -56,7 +56,7 @@ export default function Form() {
         formData.set("phoneNumber", cleanedPhoneNumber);
 
         try {
-            // Primeiro, envia os dados para o banco de dados
+            // Primeiro, envia os dados para o API
             const dataResponse = await fetch("http://localhost:5000/saveData", {
                 method: "POST",
                 body: formData,
