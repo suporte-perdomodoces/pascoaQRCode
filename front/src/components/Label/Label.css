@@ -1,0 +1,16 @@
+.login-label {
+    color: #000;
+    font-size: 1.2rem;
+    font-weight: 600;
+    padding: 4px 0;
+}
+
+.video-file-label {
+    background-color: #4CAF50;
+    border-radius: 8px;
+    padding: .5em;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}

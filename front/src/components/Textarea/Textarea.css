@@ -1,0 +1,23 @@
+.video-textarea {
+    padding: 2px 8px;
+    height: 48px;
+    resize: none;
+    box-shadow: 0 0 5px #333;
+    border-radius: 4px;
+    transition: .5s;
+}
+
+.video-textarea:focus {
+    outline: none;
+    box-shadow: 0 0 5px #333;
+    background-color: #333;
+    border-radius: 4px;
+    padding: 4px 6px;
+}
+
+.video-textarea:valid {
+    box-shadow: 0 0 5px #333;
+    background-color: #333;
+    border-radius: 4px;
+    padding: 4px 6px;
+}

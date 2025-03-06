@@ -1,0 +1,24 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    gap: 2em;
+    width: 100vw;
+    height: 100vh;
+}
+
+.formContent {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.clientData {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    background-color: rgb(51, 51, 51, 0.5);
+    padding: 1em;
+    border-radius: 8px;
+}

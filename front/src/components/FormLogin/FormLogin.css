@@ -1,0 +1,41 @@
+.login-container {
+    background: url('../../../public/image/wallpaper_pc.png') no-repeat;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;;
+}
+
+.login-logo {
+    height: 48px;
+    margin-bottom: 10%;
+}
+
+.login-form {
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6%;
+    padding: 5% 8%;
+    gap: 1.4em;
+}
+
+.login-inputs {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 50%;
+}
+
+error-mesaage {
+    color: red;
+    font-size: 1.2rem;
+    font-weight: 600;
+    padding: 4px 0;
+}
