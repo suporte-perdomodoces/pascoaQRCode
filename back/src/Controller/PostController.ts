@@ -76,7 +76,7 @@ export class PostController {
     //Apenas para teste
     salvarPNG(newQRCode, `${fileName}.png`);
     // 
-    return res.send({ newQRCode });
+    return res.json({ newQRCode });
   }
 
   async stream(req: Request, res: Response) {

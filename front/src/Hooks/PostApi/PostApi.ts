@@ -8,10 +8,24 @@ type NewPostData = {
   file: Blob;
 }
 
+
+type NewQRCode = {
+  newPost: {
+    id: string;
+    clientId: string;
+    nf: string;
+    fileName: string;
+    message: string | null;
+  };
+  newQRCode: {
+    type: "Buffer";
+    data: number[];
+  };
+};
+
+
 export const PostApi = {
-
-
-  newPost: async (newPostData: NewPostData): Promise<ArrayBuffer> => {
+  newPost: async (newPostData: NewPostData): Promise<NewQRCode> => {
     console.log(import.meta.env.VITE_API_BASE_URL)
 
         const formData = new FormData();
@@ -24,13 +38,12 @@ export const PostApi = {
     const res = await api.post('/post', formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
-      },
-      responseType: 'blob'
+      }
     })
 
+    console.log("res: ", res.data);
 
-
-    return res.data as ArrayBuffer
+    return res.data as NewQRCode
   },
 
   getPost: async (fileName: string): Promise<ArrayBuffer> => {

@@ -5,12 +5,15 @@ import Button from "../Button";
 import Input from "../Input";
 import Label from "../Label";
 import Recorder from "../Recorder/";
+import { exibirQRCode, imprimirBlob } from "../../script/ImprimirQRCode";
 
 export default function Form() {
     const [videoBlob, setVideoBlob] = useState<Blob | null>(null);
     const [name, setName] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
     const [NF, setNF] = useState("");
+
+    const [imgQRCode, setImgQRCode] = useState<string | null>(null)
 
     const postApi = new UseApi().postApi;
 
@@ -60,8 +63,6 @@ export default function Form() {
 
         const cleanedPhoneNumber = phoneNumber.replace(/\D/g, "");
 
-
-
         const dataPost = {
             name,
             nf: NF,
@@ -70,40 +71,13 @@ export default function Form() {
         }
 
 
-        const res = postApi.newPost(dataPost);
+        const res = await postApi.newPost(dataPost);
+
+        imprimirBlob(res.newQRCode)
+
+        setImgQRCode(exibirQRCode(res.newQRCode))
 
         console.log("QRCode: ", res);
-
-        // try {
-        //     // Primeiro, envia os dados para o API
-        //     const dataResponse = await fetch("http://localhost:5000/saveData", {
-        //         method: "POST",
-        //         body: formData,
-        //     });
-
-        //     if (!dataResponse.ok) {
-        //         alert("Erro ao enviar os dados para o banco.");
-        //         return;
-        //     }
-
-        //     // Agora, envia o vídeo para o servidor
-        //     const videoFormData = new FormData();
-        //     videoFormData.append("video", videoBlob, "gravacao.webm");
-
-        //     const videoResponse = await fetch("http://localhost:5000/uploadVideo", {
-        //         method: "POST",
-        //         body: videoFormData,
-        //     });
-
-        //     if (videoResponse.ok) {
-        //         alert("Dados e vídeo enviados com sucesso!");
-        //     } else {
-        //         alert("Erro ao enviar o vídeo.");
-        //     }
-        // } catch (error) {
-        //     console.error("Erro na requisição:", error);
-        //     alert("Erro ao conectar com o servidor.");
-        // }
     }
 
     return (
@@ -142,7 +116,11 @@ export default function Form() {
                 </div>
             </div>
 
-            <Button type="submit" className="video-button" d={false}>Enviar</Button>
+            <div>
+                {imgQRCode && <img src={imgQRCode} alt="QR Code" />}
+            </div>
+
+            <Button onClick={handleSubmit} type="submit" className="video-button" d={false}>Enviar</Button>
         </form>
     );
 }
