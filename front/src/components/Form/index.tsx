@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./Form.css";
+import { UseApi } from "../../Hooks/UseApi";
 import Button from "../Button";
 import Input from "../Input";
 import Label from "../Label";
@@ -10,6 +11,8 @@ export default function Form() {
     const [name, setName] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
     const [NF, setNF] = useState("");
+
+    const postApi = new UseApi().postApi;
 
     const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value);
     const handleNFChange = (e: React.ChangeEvent<HTMLInputElement>) => setNF(e.target.value);
@@ -43,48 +46,64 @@ export default function Form() {
     async function handleSubmit(event: React.FormEvent) {
         event.preventDefault();
 
+        console.log("Entrou")
+
         if (!videoBlob) {
             alert("Por favor, grave um vídeo antes de enviar.");
             return;
         }
 
-        const formElement = event.target as HTMLFormElement;
-        const formData = new FormData(formElement);
-
-        // Limpa o número de telefone removendo os símbolos
-        const cleanedPhoneNumber = phoneNumber.replace(/\D/g, "");
-        formData.set("phoneNumber", cleanedPhoneNumber);
-
-        try {
-            // Primeiro, envia os dados para o API
-            const dataResponse = await fetch("http://localhost:5000/saveData", {
-                method: "POST",
-                body: formData,
-            });
-
-            if (!dataResponse.ok) {
-                alert("Erro ao enviar os dados para o banco.");
-                return;
-            }
-
-            // Agora, envia o vídeo para o servidor
-            const videoFormData = new FormData();
-            videoFormData.append("video", videoBlob, "gravacao.webm");
-
-            const videoResponse = await fetch("http://localhost:5000/uploadVideo", {
-                method: "POST",
-                body: videoFormData,
-            });
-
-            if (videoResponse.ok) {
-                alert("Dados e vídeo enviados com sucesso!");
-            } else {
-                alert("Erro ao enviar o vídeo.");
-            }
-        } catch (error) {
-            console.error("Erro na requisição:", error);
-            alert("Erro ao conectar com o servidor.");
+        if (!name || !NF || !phoneNumber) {
+            alert("Por favor, preencha todos as iformações.");
+            return;
         }
+
+        const cleanedPhoneNumber = phoneNumber.replace(/\D/g, "");
+
+
+
+        const dataPost = {
+            name,
+            nf: NF,
+            phone: cleanedPhoneNumber,
+            file: videoBlob,
+        }
+
+
+        const res = postApi.newPost(dataPost);
+
+        console.log("QRCode: ", res);
+
+        // try {
+        //     // Primeiro, envia os dados para o API
+        //     const dataResponse = await fetch("http://localhost:5000/saveData", {
+        //         method: "POST",
+        //         body: formData,
+        //     });
+
+        //     if (!dataResponse.ok) {
+        //         alert("Erro ao enviar os dados para o banco.");
+        //         return;
+        //     }
+
+        //     // Agora, envia o vídeo para o servidor
+        //     const videoFormData = new FormData();
+        //     videoFormData.append("video", videoBlob, "gravacao.webm");
+
+        //     const videoResponse = await fetch("http://localhost:5000/uploadVideo", {
+        //         method: "POST",
+        //         body: videoFormData,
+        //     });
+
+        //     if (videoResponse.ok) {
+        //         alert("Dados e vídeo enviados com sucesso!");
+        //     } else {
+        //         alert("Erro ao enviar o vídeo.");
+        //     }
+        // } catch (error) {
+        //     console.error("Erro na requisição:", error);
+        //     alert("Erro ao conectar com o servidor.");
+        // }
     }
 
     return (

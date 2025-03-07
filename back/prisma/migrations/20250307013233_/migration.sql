@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `post` MODIFY `nf` VARCHAR(191) NOT NULL;

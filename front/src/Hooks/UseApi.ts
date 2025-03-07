@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { AuthApi } from './AuthApi/AuthApi';
+import { PostApi } from './PostApi/PostApi';
 
 
 
@@ -15,6 +16,7 @@ export class UseApi {
 
   // Opçãoes de requisições para a rota de login
   authApi = AuthApi;
+  postApi =PostApi;
 
 
 }

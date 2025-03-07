@@ -1,18 +1,32 @@
 
 import { api } from '../UseApi';
 
-// type NewPostData = {
-//   clientID: string;
-
-// }
+type NewPostData = {
+  name: string;
+  nf: string;
+  phone: string;
+  file: Blob;
+}
 
 export const PostApi = {
 
 
-  newPost: async (): Promise<ArrayBuffer> => {
+  newPost: async (newPostData: NewPostData): Promise<ArrayBuffer> => {
     console.log(import.meta.env.VITE_API_BASE_URL)
 
-    const res = await api.post('/post')
+        const formData = new FormData();
+
+        formData.set("phone", newPostData.phone);
+        formData.set("nf", newPostData.nf);
+        formData.set("name", newPostData.name);
+        formData.set("file", newPostData.file);
+
+    const res = await api.post('/post', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      },
+      responseType: 'blob'
+    })
 
 
 
@@ -20,9 +34,18 @@ export const PostApi = {
   },
 
   getPost: async (fileName: string): Promise<ArrayBuffer> => {
-    console.log(import.meta.env.VITE_API_BASE_URL)
+    console.log("URL: ", import.meta.env.VITE_API_BASE_URL);
+    const token = localStorage.getItem('token');
 
-    const res = await api.get(`/post:&fileName=${fileName}`)
+    const res = await api.get(`/post?postName=${fileName}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'multipart/form-data'
+      },
+      responseType: 'blob'
+    })
+
+    console.log("Response: ", res)
     
     return res.data as ArrayBuffer
   },

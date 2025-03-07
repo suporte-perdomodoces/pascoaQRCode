@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./Recorder.css";
 import Button from "../Button";
 import Input from "../Input";
