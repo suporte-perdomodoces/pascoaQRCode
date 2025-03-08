@@ -16,6 +16,7 @@
 .video-input {
     height: 24px;
     padding: 2px 8px;
+    background-color: #33333365;
     box-shadow: 0 0 5px #333;
     border-radius: 4px;
     transition: .5s;
@@ -23,7 +24,6 @@
 
 .video-input:focus {
     outline: none;
-    box-shadow: 0 0 5px #fff;
     background-color: #333;
     border-radius: 4px;
     padding: 2px 6px;

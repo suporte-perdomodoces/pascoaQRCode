@@ -5,6 +5,7 @@ import UserView from "../components/UserView";
 export default function View() {
   const [videoURL, setVideoURL] = useState<string |null>(null);
   const [videoId, setVideoId] = useState<string |null>(null);
+  const [orientation, setOrientation] = useState('video-horizontal');
 
   useEffect(() => {
     const fetchVideoData = async () => {
@@ -28,13 +29,39 @@ export default function View() {
     fetchVideoData();
   }, []);
 
+  useEffect(() => {
+    const videos = document.querySelectorAll('video'); 
+  
+    const updateOrientation = (video: HTMLVideoElement, setOrientation: (orientation: string) => void) => {
+      setOrientation(video.videoWidth > video.videoHeight ? 'video-horizontal' : 'video-vertical');
+    };
+  
+    const videoListeners: (() => void)[] = []; 
+  
+    videos.forEach((video) => {
+      const orientationUpdater = () => updateOrientation(video, setOrientation);
+  
+      video.addEventListener('loadedmetadata', orientationUpdater);
+      video.addEventListener('resize', orientationUpdater);
+  
+      videoListeners.push(() => {
+        video.removeEventListener('loadedmetadata', orientationUpdater);
+        video.removeEventListener('resize', orientationUpdater);
+      });
+    });
+  
+    return () => {
+      videoListeners.forEach((cleanup) => cleanup()); 
+    };
+  }, [setOrientation]); 
+
   return (
-    <Container className="container_02">
-      {videoURL && videoId ? ( // Verifica se ambos videoURL e videoId tem valor antes de renderizar UserView
-        <UserView videoURL={videoURL} id={videoId} />
-      ) : (
+    <Container className="container_03">
+      {/* {videoURL ? ( */}
+        <UserView videoURL="/video/vertical.mp4" id="1" className={orientation}/>
+      {/* ) : (
         <p>Carregando vídeo...</p>
-      )}
+      )} */}
     </Container>
   );
 }

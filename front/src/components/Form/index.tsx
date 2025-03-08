@@ -5,15 +5,19 @@ import Button from "../Button";
 import Input from "../Input";
 import Label from "../Label";
 import Recorder from "../Recorder/";
-import { exibirQRCode, imprimirBlob } from "../../script/ImprimirQRCode";
+import { exibirQRCode, imprimirBlob } from "../../script/ImprimirQRCode.ts";
+import Modal from "../Modal/index.tsx";
+import Overlay from "../Overlay/index.tsx";
 
 export default function Form() {
     const [videoBlob, setVideoBlob] = useState<Blob | null>(null);
     const [name, setName] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
     const [NF, setNF] = useState("");
-
     const [imgQRCode, setImgQRCode] = useState<string | null>(null)
+    const [uploadProgress, setUploadProgress] = useState(0);
+    const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
+    const [uploadVideo, setUploadVideo] = useState(false);
 
     const postApi = new UseApi().postApi;
 
@@ -80,6 +84,47 @@ export default function Form() {
         console.log("QRCode: ", res);
     }
 
+    /* const handleSubmit = (event: React.FormEvent) => {
+        event.preventDefault();
+
+        const formData = new FormData();
+        formData.append("name", name);
+        formData.append("nf", NF);
+        formData.append("phone", phoneNumber.replace(/\D/g, ""));
+        formData.append("file", videoBlob as Blob);
+
+        const xhr = new XMLHttpRequest();
+
+        xhr.upload.onprogress = (event) => {
+            if (event.lengthComputable) {
+                const percentComplete = (event.loaded / event.total) * 100;
+                setUploadProgress(percentComplete);
+            }
+        };
+
+        xhr.onload = () => {
+            if (xhr.status >= 200 && xhr.status < 300) {
+                const res = JSON.parse(xhr.responseText);
+                imprimirBlob(res.newQRCode);
+                setImgQRCode(exibirQRCode(res.newQRCode));
+                setUploadVideo(true);
+                setTimeout(() => window.close(), 5000);
+            } else {
+                console.error("Erro no upload:", xhr.statusText);
+                setUploadVideo(true);
+                alert("Erro ao enviar o vídeo.");
+                setIsUploadModalOpen(false);
+                setUploadProgress(0); // Reinicia a barra de progresso em caso de erro.
+            }
+        };
+
+        xhr.open("POST", "SUA_URL_DE_UPLOAD"); // Substitua pela sua URL
+        xhr.send(formData);
+
+        setIsUploadModalOpen(true);
+        setUploadVideo(false);
+    }; */
+
     return (
         <form className="form" onSubmit={handleSubmit}>
             <div className="formContent">
@@ -115,12 +160,24 @@ export default function Form() {
                         onChange={handleNFChange} />
                 </div>
             </div>
-
-            <div>
-                {imgQRCode && <img src={imgQRCode} alt="QR Code" />}
-            </div>
-
+            
             <Button onClick={handleSubmit} type="submit" className="video-button" d={false}>Enviar</Button>
+
+            {isUploadModalOpen && (
+                <>
+                    <Overlay />
+                    <Modal>
+                        {uploadVideo ? (
+                            <p>Vídeo salvo com sucesso. A aba será fechada em 5 segundos.</p>
+                        ) : (
+                            <>
+                                <p>Enviando vídeo... {uploadProgress.toFixed(2)}%</p>
+                                <progress value={uploadProgress} max="100" />
+                            </>
+                        )}
+                    </Modal>
+                </>
+            )}
         </form>
     );
 }

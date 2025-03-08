@@ -75,4 +75,24 @@
     border: 1px solid #999999; 
     cursor: not-allowed; 
     opacity: 0.6;
-  }
+}
+
+@media (max-width: 800px) {
+    .video-button-start {
+        display: none;
+    }
+}
+
+/* Header button styles */
+
+.header-button-management {
+    background-color: #0C4570;
+    border: 1px solid #0C4570;
+    transition: .5s;
+}
+
+.header-button-management:hover {
+    background-color: #fff;
+    color:#0C4570;
+    border: 1px solid #0C4570;
+}

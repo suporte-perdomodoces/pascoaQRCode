@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import "./Recorder.css";
 import Button from "../Button";
 import Input from "../Input";
@@ -70,7 +70,7 @@ export default function Recorder({ setVideoBlob }: { setVideoBlob: (blob: Blob |
         const url = URL.createObjectURL(blob);
         setRecordedVideoUrl(url);
         setShowRecordedVideo(true);
-        setFileInputDisabled(true); // Desabilita o input de arquivo
+        setFileInputDisabled(true);
       };
 
       mediaRecorder.current.start();
@@ -109,6 +109,7 @@ export default function Recorder({ setVideoBlob }: { setVideoBlob: (blob: Blob |
       <div className="controls">
         <Label htmlFor="file" className="video-file-label">
           <img src="/image/uploadIcon.png" alt="upload" className="video-icon-upload" />
+          <p className="video-file-label-name">Carregue o vídeo</p>
         </Label>
         <Input
           type="file"

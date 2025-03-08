@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import './App.css';
-import View from './pages/FormVideo';
+import FormVideo from './pages/FormVideo';
 import Login from './pages/Login';
+import View from './pages/view';
 
 function App() {
   const [isLogged, setIsLogged] = useState(true);

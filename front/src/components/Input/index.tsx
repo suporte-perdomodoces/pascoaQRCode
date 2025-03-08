@@ -10,9 +10,10 @@ interface InputProps {
   r: boolean;
   d?: boolean;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  min?: number;
 }
 
-export default function Input({ type, placeholder, className, id, name, value, r, d, onChange }: InputProps) {
+export default function Input({ type, placeholder, className, id, name, value, r, d, onChange, min }: InputProps) {
   return (
     <input
       autoComplete='off'
@@ -25,6 +26,7 @@ export default function Input({ type, placeholder, className, id, name, value, r
       required={r}
       disabled={d}
       onChange={onChange}
+      minLength={min}
     />
   )
 }

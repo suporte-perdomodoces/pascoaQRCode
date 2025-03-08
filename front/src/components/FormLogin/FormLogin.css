@@ -1,7 +1,4 @@
 .login-container {
-    background: url('../../../public/image/wallpaper_pc.png') no-repeat;
-    background-size: cover;
-    background-position: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -31,11 +28,4 @@
     flex-direction: column;
     justify-content: center;
     height: 50%;
-}
-
-error-mesaage {
-    color: red;
-    font-size: 1.2rem;
-    font-weight: 600;
-    padding: 4px 0;
 }

@@ -14,3 +14,14 @@
     align-items: center;
     justify-content: center;
 }
+
+.video-label {
+    color: #0C4570;
+}
+
+@media (max-width: 800px) {
+    .video-file-label {
+        width: 100%;
+        gap: .5em;
+    }
+}

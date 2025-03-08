@@ -1,20 +1,32 @@
 .container_01 {
-    background: url('../../../public/image/wallpaper_pc.png');
-    background-repeat: no-repeat;
-    background-size: cover;
+    background: linear-gradient(45deg, #0C4570, #167FCF);
     display: flex;
+    flex: 1 0 auto;
     justify-content: space-around;
     align-items: center;
-    width: 100vw;
-    height: 100vh;
 }
 
 .container_02 {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    flex: 1 0 auto;
+    gap: 8em;
     align-items: center;
-    width: 100vw;
-    height: 100vh;
+    padding-bottom: 1.5em;
+    width: 100%;
+    max-width: 100vw;
+    min-height: 100vh;
     background: linear-gradient(45deg, #0C4570, #167FCF);
+}
+
+.container_03 {
+    background: linear-gradient(45deg, #0C4570, #167FCF);
+    min-width: 100vw;
+    min-height: 100vh;
+}
+
+@media (max-width: 800px) {
+    .container_01, .container_02 {
+        gap: 1em;
+    }
 }

@@ -1,8 +1,17 @@
+import './UserView.css';
+
 interface UserViewProps {
-    videoURL: string;
-    id?: string;
-  }
-  
-  export default function UserView({ videoURL, id }: UserViewProps) {
-    return <video src={videoURL} id={id} controls width="640" height="360" />; // Adicionei controls e dimensões
-  }
+  videoURL: string;
+  id?: string;
+  className: string;
+}
+
+export default function UserView({ videoURL, id, className }: UserViewProps) {
+  return (
+    <div className='UserView-container'>
+      <img src="/public/image/perdomoLogo.png" alt="Logo P" className='UserView-logo' />
+        {/* <video src='/public/video/horizontal.mp4' controls className='video-horizontal'/> */}
+        <video src={videoURL} id={id} controls className={className} />
+    </div>
+  )
+}
