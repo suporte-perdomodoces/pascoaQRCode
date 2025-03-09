@@ -6,13 +6,8 @@ import Input from "../Input";
 import Label from "../Label";
 
 
-type Props = {
-    props: {
-        setIsLogged: (isLogged: boolean) => void;
-    }
-}
 
-export default function FormLogin({ props }: Props) {
+export default function FormLogin() {
     const [user, setUser] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
@@ -36,8 +31,6 @@ export default function FormLogin({ props }: Props) {
             setError("Usuário ou senha inválidos");
             return;
         }
-
-        props.setIsLogged(true)
 
 
                 

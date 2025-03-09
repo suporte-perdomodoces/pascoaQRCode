@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Container from "../components/Container";
 import UserView from "../components/UserView";
 
@@ -37,8 +37,8 @@ export default function View() {
     };
   
     const videoListeners: (() => void)[] = []; 
-  
-    videos.forEach((video) => {
+
+    for(const video of videos) {
       const orientationUpdater = () => updateOrientation(video, setOrientation);
   
       video.addEventListener('loadedmetadata', orientationUpdater);
@@ -48,12 +48,12 @@ export default function View() {
         video.removeEventListener('loadedmetadata', orientationUpdater);
         video.removeEventListener('resize', orientationUpdater);
       });
-    });
+    }
   
     return () => {
-      videoListeners.forEach((cleanup) => cleanup()); 
+      for(const cleanup of videoListeners) cleanup()
     };
-  }, [setOrientation]); 
+  }, []); 
 
   return (
     <Container className="container_03">
