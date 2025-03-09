@@ -1,7 +1,8 @@
 import { useState } from "react";
 import "./Form.css";
+import { useNavigate } from "react-router-dom";
 import { UseApi } from "../../Hooks/UseApi";
-import { exibirQRCode, imprimirBlob } from "../../script/ImprimirQRCode.ts";
+import { imprimirBlob } from "../../script/ImprimirQRCode.ts";
 import Button from "../Button";
 import Input from "../Input";
 import Label from "../Label";
@@ -14,10 +15,11 @@ export default function Form() {
     const [name, setName] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
     const [NF, setNF] = useState("");
-    const [imgQRCode, setImgQRCode] = useState<string | null>(null);
     const [uploadProgress, setUploadProgress] = useState(0);
     const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
     const [uploadVideo, setUploadVideo] = useState(false);
+
+    const navigate = useNavigate()
 
     const postApi = new UseApi().postApi;
 
@@ -77,11 +79,12 @@ export default function Form() {
 
         const res = await postApi.newPost(dataPost);
 
-        imprimirBlob(res.newQRCode)
+        if (!res) {
+            navigate("/login")
+            return
+        }
 
-        setImgQRCode(exibirQRCode(res.newQRCode))
-
-        console.log("QRCode: ", res);
+        imprimirBlob(res)
     }
 
 

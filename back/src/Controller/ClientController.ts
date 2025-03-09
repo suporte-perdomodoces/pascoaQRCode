@@ -34,6 +34,41 @@ export class ClientController {
 
     return res.status(201).json(client);
 
-
   };
+
+  async read(req: Request, res: Response) {
+    const clientId = req.query.clientId as string;
+
+    if (clientId) {
+      const client = await prismaClient.client.findUnique({
+        where: { id: clientId },
+        include: {
+          _count: {
+            select: {
+              post: true
+            }
+          }
+        }
+      });
+  
+      if (!client) {
+          throw new BadResquestError("Client not found");
+      }
+  
+      return res.json(client);
+    }
+
+    const client = await prismaClient.client.findMany({
+      include: {
+        _count: {
+          select: {
+            post: true
+          }
+        }
+      }
+    });
+
+    return res.json(client);
+    
+  }
 }

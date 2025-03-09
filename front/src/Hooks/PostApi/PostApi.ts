@@ -25,7 +25,7 @@ type NewQRCode = {
 
 
 export const PostApi = {
-  newPost: async (newPostData: NewPostData): Promise<NewQRCode> => {
+  newPost: async (newPostData: NewPostData): Promise<Blob | false> => {
     console.log(import.meta.env.VITE_API_BASE_URL)
 
         const formData = new FormData();
@@ -39,15 +39,18 @@ export const PostApi = {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
         'Content-Type': 'multipart/form-data'
-      }
+      },
+      responseType: 'blob'
     })
 
-    console.log("res: ", res.data);
+    if (res.status === 401) {
+      return false;  
+    }
 
-    return res.data as NewQRCode
+    return res.data
   },
 
-  getPost: async (fileName: string): Promise<ArrayBuffer> => {
+  getPost: async (fileName: string): Promise<ArrayBuffer | false> => {
     console.log("URL: ", import.meta.env.VITE_API_BASE_URL);
     const token = localStorage.getItem('token');
 
@@ -59,7 +62,9 @@ export const PostApi = {
       responseType: 'blob'
     })
 
-    console.log("Response: ", res)
+    if (res.status === 401) {
+      return false;  
+    }
     
     return res.data as ArrayBuffer
   },

@@ -6,7 +6,7 @@ import "./Table.css"
 type Props = {
   props: {
     thead: JSX.Element;
-    tbody: JSX.Element[];
+    tbody: JSX.Element[] | JSX.Element;
   }
 }
 

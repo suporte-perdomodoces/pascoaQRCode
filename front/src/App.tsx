@@ -11,8 +11,9 @@ function App() {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
+      <Route path="/client" element={<View />} />
+
       <Route path="/" element={<RequireAuth><FormVideo /></RequireAuth>} />
-      <Route path="/client" element={<RequireAuth><View /></RequireAuth>} />
       <Route path="/admin" element={<RequireAuth><Admin /></RequireAuth>} />
     </Routes>
   );
