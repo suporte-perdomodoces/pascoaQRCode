@@ -1,20 +1,19 @@
 import './Header.css';
-import { useNavigate } from 'react-router-dom'; // Correto para navegação
 import Button from "../Button";
+import { FormEvent } from 'react';
 
-export default function Header() {
-    const navigate = useNavigate(); // Hook para navegação
+interface HeaderProps {
+    buttonText: string;
+    onClick: (e: FormEvent<Element>) => void;
+}
 
-    const handleManagement = () => {
-        navigate("/admin"); // Redireciona para a rota "/admin"
-        console.log("Redirecionando para /admin");
-    };
-
+export default function Header({buttonText, onClick}: HeaderProps) {
+    
     return (
         <header className="header-container">
             <img src="/image/logoPblue.png" alt="logo P" className='header-logo' />
-            <Button onClick={handleManagement} className='header-button-management'>
-                Gerenciar QR
+            <Button onClick={onClick} className='header-button-management'>
+                {buttonText}
             </Button>
         </header>
     );
