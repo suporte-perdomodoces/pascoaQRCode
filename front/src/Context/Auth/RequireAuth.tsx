@@ -5,9 +5,6 @@ import { AuthContext } from "./AuthContext";
 export const RequireAuth = ({ children }: { children: JSX.Element }) => {
   const auth = useContext(AuthContext);
 
-  // if (!auth.user) {
-  //   return <Login />;
-  // }
+  return auth.user ? children : <Login />
 
-  return children; // Agora está correto
 };

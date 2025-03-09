@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./Recorder.css";
 import Button from "../Button";
 import Input from "../Input";
@@ -89,7 +89,7 @@ export default function Recorder({ setVideoBlob }: { setVideoBlob: (blob: Blob |
 
     if (videoRef.current?.srcObject) {
       const tracks = (videoRef.current.srcObject as MediaStream).getTracks();
-      tracks.forEach((track) => track.stop());
+      for(const track of tracks) track.stop();
       videoRef.current.srcObject = null;
     }
     setFileInputDisabled(false);

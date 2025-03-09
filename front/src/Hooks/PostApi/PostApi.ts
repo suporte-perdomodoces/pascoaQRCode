@@ -37,6 +37,7 @@ export const PostApi = {
 
     const res = await api.post('/post', formData, {
       headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
         'Content-Type': 'multipart/form-data'
       }
     })

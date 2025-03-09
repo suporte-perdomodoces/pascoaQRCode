@@ -3,7 +3,7 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-    gap: 8em;
+    gap: 2em;
     margin: 0 auto;
     padding: 2em;
 }
@@ -24,8 +24,8 @@
 
 .video-vertical {
     max-width: 550px;
-    width: 80%;
-    min-width: 200px;
+    height: 80%;
+    min-height: 200px;
     border-radius: 16px;
     box-shadow: 0 0 15px #000;
 }

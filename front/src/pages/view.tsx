@@ -1,33 +1,42 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { UseApi } from "../Hooks/UseApi";
 import Container from "../components/Container";
 import UserView from "../components/UserView";
 
+
+const postApi = new UseApi().postApi
+
 export default function View() {
-  const [videoURL, setVideoURL] = useState<string |null>(null);
-  const [videoId, setVideoId] = useState<string |null>(null);
+  const [videoURL, setVideoURL] = useState<string | null>(null);
   const [orientation, setOrientation] = useState('video-horizontal');
+  const location = useLocation(); // Mover para fora da função assíncrona
 
   useEffect(() => {
-    const fetchVideoData = async () => {
-      const hash = window.location.hash.substring(1); // Remove o '#' inicial
-      if (hash) {
-        try {
-          const response = await fetch(`/api/video?hash=${hash}`); // Sua API aqui
-          if (response.ok) {
-            const data = await response.json();
-            setVideoId(data.id);
-            setVideoURL(`/videos/${data.id}.${data.extension}`); // Sua estrutura de diretórios
-          } else {
-            console.error("Erro ao buscar dados do vídeo");
-          }
-        } catch (error) {
-          console.error("Erro na requisição:", error);
-        }
+    const getFile = async () => {
+      const queryParams = new URLSearchParams(location.search);
+      const queryValue = queryParams.keys().next().value;
+
+      
+      if (!queryValue) {
+        return;
       }
+      
+      const extensionFileName = queryValue.split(".")[1]
+
+      console.log(extensionFileName)
+
+      const res = await postApi.getPost(queryValue);
+
+      const blob = new Blob([res], { type: `video/.${extensionFileName}` });
+
+      const url = URL.createObjectURL(blob);
+
+      setVideoURL(url);
     };
 
-    fetchVideoData();
-  }, []);
+    getFile();
+  }, [location]); // Dependência para garantir que o hook seja chamado quando a location mudar
 
   useEffect(() => {
     const videos = document.querySelectorAll('video'); 
@@ -38,7 +47,7 @@ export default function View() {
   
     const videoListeners: (() => void)[] = []; 
 
-    for(const video of videos) {
+    for (const video of videos) {
       const orientationUpdater = () => updateOrientation(video, setOrientation);
   
       video.addEventListener('loadedmetadata', orientationUpdater);
@@ -51,17 +60,17 @@ export default function View() {
     }
   
     return () => {
-      for(const cleanup of videoListeners) cleanup()
+      for (const cleanup of videoListeners) cleanup();
     };
   }, []); 
 
   return (
     <Container className="container_03">
-      {/* {videoURL ? ( */}
-        <UserView videoURL="/video/vertical.mp4" id="1" className={orientation}/>
-      {/* ) : (
+      {videoURL ? (
+        <UserView videoURL={videoURL} className={orientation} />
+      ) : (
         <p>Carregando vídeo...</p>
-      )} */}
+      )}
     </Container>
   );
 }

@@ -1,18 +1,13 @@
-import React, { useState } from 'react';
 import './Header.css';
+import { useNavigate } from 'react-router-dom'; // Correto para navegação
 import Button from "../Button";
-import Modal from '../Modal';
-import Overlay from '../Overlay';
 
 export default function Header() {
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const navigate = useNavigate(); // Hook para navegação
 
     const handleManagement = () => {
-        setIsModalOpen(true);
-    };
-
-    const closeModal = () => {
-        setIsModalOpen(false);
+        navigate("/admin"); // Redireciona para a rota "/admin"
+        console.log("Redirecionando para /admin");
     };
 
     return (
@@ -21,16 +16,6 @@ export default function Header() {
             <Button onClick={handleManagement} className='header-button-management'>
                 Gerenciar QR
             </Button>
-            {isModalOpen && (
-                <>
-                    <Overlay />
-                    <Modal onClose={closeModal}>
-                        <Button onClick={closeModal} className='header-button'>
-                            <img src='/image/xIcon.png' alt='Fechar' />
-                        </Button>
-                    </Modal>
-                </>
-            )}
         </header>
     );
 }

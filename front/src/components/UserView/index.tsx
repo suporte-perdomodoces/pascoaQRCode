@@ -2,16 +2,16 @@ import './UserView.css';
 
 interface UserViewProps {
   videoURL: string;
-  id?: string;
   className: string;
 }
 
-export default function UserView({ videoURL, id, className }: UserViewProps) {
+export default function UserView({ videoURL, className }: UserViewProps) {
   return (
     <div className='UserView-container'>
       <img src="/public/image/perdomoLogo.png" alt="Logo P" className='UserView-logo' />
         {/* <video src='/public/video/horizontal.mp4' controls className='video-horizontal'/> */}
-        <video src={videoURL} id={id} controls className={className} />
+        {/* biome-ignore lint/a11y/useMediaCaption: <explanation> */}
+        <video src={videoURL} controls className={className} />
     </div>
   )
 }

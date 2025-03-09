@@ -1,5 +1,6 @@
 import { useContext, useState } from "react"; 
 import "./FormLogin.css";
+import { Navigate } from "react-router-dom";
 import { AuthContext } from "../../Context/Auth/AuthContext";
 import Button from "../Button";
 import Input from "../Input";
@@ -13,6 +14,10 @@ export default function FormLogin() {
     const [error, setError] = useState("");
 
     const auth = useContext(AuthContext)
+    
+    if (auth.user) {
+        <Navigate to="/" />
+    }
 
     const handleUserChange = (e: React.ChangeEvent<HTMLInputElement>) => setUser(e.target.value);
     const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
@@ -27,6 +32,8 @@ export default function FormLogin() {
         }
 
         const res = auth.login(user, password);
+
+        console.log("Login: ", res)
         if (!res) {
             setError("Usuário ou senha inválidos");
             return;
