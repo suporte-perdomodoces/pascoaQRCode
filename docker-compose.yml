@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+  db:
+    image: mysql:latest
+    container_name: qrpascoa-db
+    restart: always
+    env_file:
+      - .db.env  # Referenciando o arquivo .env para carregar as variáveis
+    ports:
+      - "3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  back:
+    build: ./back
+    container_name: qrpascoa-back
+    restart: always
+    env_file: 
+      - .back.env
+    ports:
+      - "4001:4000"
+    volumes:
+      - back:/app
+
+  front:
+    build: ./front
+    container_name: qrpascoa-front
+    restart: always
+    env_file:
+      - .front.env      
+    volumes:
+      - front:/app
+    ports:
+      - "8888:80"
+    depends_on:
+      - back
+
+
+volumes:
+  db_data:
+  back:
+  front:

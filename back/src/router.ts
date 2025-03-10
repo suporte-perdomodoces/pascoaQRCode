@@ -35,7 +35,7 @@ router.get('/token', authController.token);
 router.post("user", privateRouter, userControlle.create)
 
 router.post('/post', privateRouter, upload.single("file"), postController.create);
-router.get('/post', privateRouter, postController.stream);
+router.get('/post', postController.stream);
 
 router.get('/qrcode', privateRouter, qrCodeController.read);
 

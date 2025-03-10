@@ -9,19 +9,19 @@ type NewPostData = {
 }
 
 
-type NewQRCode = {
-  newPost: {
-    id: string;
-    clientId: string;
-    nf: string;
-    fileName: string;
-    message: string | null;
-  };
-  newQRCode: {
-    type: "Buffer";
-    data: number[];
-  };
-};
+// type NewQRCode = {
+//   newPost: {
+//     id: string;
+//     clientId: string;
+//     nf: string;
+//     fileName: string;
+//     message: string | null;
+//   };
+//   newQRCode: {
+//     type: "Buffer";
+//     data: number[];
+//   };
+// };
 
 
 export const PostApi = {
@@ -50,7 +50,7 @@ export const PostApi = {
     return res.data
   },
 
-  getPost: async (fileName: string): Promise<ArrayBuffer | false> => {
+  getPost: async (fileName: string): Promise<ArrayBuffer> => {
     console.log("URL: ", import.meta.env.VITE_API_BASE_URL);
     const token = localStorage.getItem('token');
 
@@ -62,9 +62,9 @@ export const PostApi = {
       responseType: 'blob'
     })
 
-    if (res.status === 401) {
-      return false;  
-    }
+    // if (res.status === 401) {
+    //   return false;  
+    // }
     
     return res.data as ArrayBuffer
   },

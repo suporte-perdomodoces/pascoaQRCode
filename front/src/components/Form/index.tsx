@@ -6,8 +6,8 @@ import { imprimirBlob } from "../../script/ImprimirQRCode.ts";
 import Button from "../Button";
 import Input from "../Input";
 import Label from "../Label";
-import Modal from "../Modal/index.tsx";
-import Overlay from "../Overlay/index.tsx";
+// import Modal from "../Modal/index.tsx";
+// import Overlay from "../Overlay/index.tsx";
 import Recorder from "../Recorder/";
 
 export default function Form() {
@@ -15,9 +15,9 @@ export default function Form() {
     const [name, setName] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
     const [NF, setNF] = useState("");
-    const [uploadProgress, setUploadProgress] = useState(0);
-    const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
-    const [uploadVideo, setUploadVideo] = useState(false);
+    // const [uploadProgress, setUploadProgress] = useState(0);
+    // const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
+    // const [uploadVideo, setUploadVideo] = useState(false);
 
     const navigate = useNavigate()
 
@@ -128,7 +128,7 @@ export default function Form() {
             
             <Button onClick={handleSubmit} type="submit" className="video-button" d={false}>Enviar</Button>
 
-            {isUploadModalOpen && (
+            {/* {isUploadModalOpen && (
                 <>
                     <Overlay />
                     <Modal>
@@ -142,7 +142,7 @@ export default function Form() {
                         )}
                     </Modal>
                 </>
-            )}
+            )} */}
         </form>
     );
 }

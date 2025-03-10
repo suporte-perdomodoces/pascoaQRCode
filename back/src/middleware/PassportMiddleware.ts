@@ -10,7 +10,7 @@ import type { UserTypes } from '../helpers/types/User';
 
 dotenv.config();
 
-const expireTime = "30m"
+const expireTime = "12h"
 
 const options = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),

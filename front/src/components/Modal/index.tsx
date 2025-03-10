@@ -6,7 +6,7 @@ interface ModalProps {
     onClose?: () => void;
 }
 
-function Modal({ children, onClose }: ModalProps) {
+function Modal({ children}: ModalProps) {
     return (
         <div className="modal-container">
             <div className="modal-content">

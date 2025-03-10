@@ -1,0 +1,29 @@
+FROM node:20.11.0 as builder
+
+WORKDIR /back
+
+COPY package*.json .
+RUN npm install
+
+COPY . .
+
+RUN npm run build
+
+FROM node:20.11.0-alpine
+
+WORKDIR /back
+
+# Adicionando as variáveis de ambiente para garantir que elas sejam reconhecidas no runtime
+ENV NODE_ENV=production
+ENV DATABASE_URL=${DATABASE_URL}
+ENV JWT_SECRET=${JWT_SECRET}
+
+COPY --from=builder /back/dist ./dist
+COPY --from=builder /back/prisma ./prisma
+COPY package*.json package-lock.json ./
+
+RUN npm install --omit=dev
+
+EXPOSE 3000
+
+CMD ["npm", "run", "prod"]

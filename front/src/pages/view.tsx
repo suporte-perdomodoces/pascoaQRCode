@@ -17,6 +17,8 @@ export default function View() {
       const queryParams = new URLSearchParams(location.search);
       const queryValue = queryParams.keys().next().value;
 
+      console.log("query", queryParams)
+
       
       if (!queryValue) {
         return;

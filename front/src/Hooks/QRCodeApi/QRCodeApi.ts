@@ -1,31 +1,31 @@
 
 import { api } from '../UseApi';
 
-type NewPostData = {
-  name: string;
-  nf: string;
-  phone: string;
-  file: Blob;
-}
+// type NewPostData = {
+//   name: string;
+//   nf: string;
+//   phone: string;
+//   file: Blob;
+// }
 
 
-type NewQRCode = {
-  newPost: {
-    id: string;
-    clientId: string;
-    nf: string;
-    fileName: string;
-    message: string | null;
-  };
-  newQRCode: {
-    type: "Buffer";
-    data: number[];
-  };
-};
+// type NewQRCode = {
+//   newPost: {
+//     id: string;
+//     clientId: string;
+//     nf: string;
+//     fileName: string;
+//     message: string | null;
+//   };
+//   newQRCode: {
+//     type: "Buffer";
+//     data: number[];
+//   };
+// };
 
 
 export const QRCodeApi = {
-  getQRCode: async (fileName: string): Promise<Blob | false> => {
+  getQRCode: async (fileName: string): Promise<Blob> => {
 
     const token = localStorage.getItem('token')
 
@@ -36,9 +36,9 @@ export const QRCodeApi = {
       responseType: 'blob'
     })
 
-    if (res.status === 401) {
-      return false;
-    }
+    // if (res.status === 401) {
+    //   return false;
+    // }
 
     console.log(res.data)
     return res.data

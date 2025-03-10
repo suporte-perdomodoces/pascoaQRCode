@@ -1,0 +1,38 @@
+# Estágio 1: Construção da aplicação
+FROM node:18-alpine as build
+
+WORKDIR /app
+
+# Copiar o package.json e package-lock.json
+COPY package*.json ./
+
+# Instalar dependências
+RUN npm install
+
+# Copiar todos os arquivos da aplicação
+COPY . .
+
+# Adicionando o ARG para aceitar a variável VITE_API_BASE_URL durante o build
+ARG VITE_API_BASE_URL
+
+# Definindo a variável de ambiente para o Vite durante o build
+ENV VITE_API_BASE_URL=http://192.168.0.2:4001
+
+# Rodar o build da aplicação
+RUN npm run build
+
+# Estágio 2: Servindo a aplicação com Nginx
+FROM nginx:alpine
+
+RUN rm /etc/nginx/conf.d/default.conf
+
+COPY nginx.conf /etc/nginx/conf.d
+
+# Copiar os arquivos gerados no build para o diretório do Nginx
+COPY --from=build /app/dist /usr/share/nginx/html
+
+# Expor a porta 80
+EXPOSE 80
+
+# Rodar o Nginx para servir a aplicação
+CMD ["nginx", "-g", "daemon off;"]

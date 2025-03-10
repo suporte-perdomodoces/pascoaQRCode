@@ -24,7 +24,7 @@ export default function Recorder({ setVideoBlob }: { setVideoBlob: (blob: Blob |
   }, [recordedVideoUrl]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
+    if (e.target.files?.[0]) {
       setFile(e.target.files[0]);
       setVideoBlob(e.target.files[0]);
       setRecordButtonDisabled(true);
@@ -73,6 +73,8 @@ export default function Recorder({ setVideoBlob }: { setVideoBlob: (blob: Blob |
         setFileInputDisabled(true);
       };
 
+      console.log(file)
+
       mediaRecorder.current.start();
       setRecording(true);
       setFileInputDisabled(true);
@@ -105,7 +107,7 @@ export default function Recorder({ setVideoBlob }: { setVideoBlob: (blob: Blob |
         controls={showRecordedVideo}
         src={showRecordedVideo && recordedVideoUrl ? recordedVideoUrl : undefined}
         muted={recording}
-      ></video>
+      />
       <div className="controls">
         <Label htmlFor="file" className="video-file-label">
           <img src="/image/uploadIcon.png" alt="upload" className="video-icon-upload" />
