@@ -1,2 +1,2 @@
 init.sql
-.env
+*.env*
